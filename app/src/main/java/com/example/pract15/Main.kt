@@ -3,11 +3,9 @@ package com.example.pract15
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 
 class Main : MyBaseActivity() {
         private lateinit var adapter: ListAdapter
@@ -17,6 +15,7 @@ class Main : MyBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_act)
         btnAdd = findViewById<Button>(R.id.btnAdd)
+
         btnAdd.setOnClickListener {
             callSecondForm(-1, CREATE_ACTION)
         }
@@ -45,8 +44,9 @@ class Main : MyBaseActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 if (data != null) {
-                    val id: Int = data.getIntExtra(EXTRA_ID, 0)
-                    val text = data.getStringExtra(EXTRA_TEXT) ?: ""
+                    val id: Int = data.getIntExtra(EXTRA_ID, 1)
+                    val text: String = data.getStringExtra(EXTRA_TEXT) ?: ""
+                    println("EXTRA_TEXT: $text")
                     val actionCode = data.getIntExtra(EXTRA_ACTION_CODE, CREATE_ACTION)
                     when (actionCode){
                         CREATE_ACTION -> adapter.addItem(text)
